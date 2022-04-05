@@ -1,0 +1,41 @@
+[
+  {
+    "name": "app",
+    "image": "596211650892.dkr.ecr.ap-northeast-1.amazonaws.com/jg-app:3",
+    "cpu": 300,
+    "memoryReservation": 600,
+    "essential": true,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "template-service",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "php"
+      }
+    }
+  },
+  {
+    "name": "nginx",
+    "image": "596211650892.dkr.ecr.ap-northeast-1.amazonaws.com/jg-web:3",
+    "essential": true,
+    "cpu": 200,
+    "memoryReservation": 128,
+    "portMappings": [
+      {
+        "hostPort": 80,
+        "containerPort": 80
+      }
+    ],
+    "links": [
+      "app"
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "template-service",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "nginx"
+      }
+    }
+  }
+]
